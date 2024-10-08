@@ -48,7 +48,7 @@ export class RegisterComponent {
     this.isLoading = true;
     this._AuthService.registerForm(this.registerForm.value).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.registerForm.reset();
 
         setTimeout(() => {
@@ -58,7 +58,7 @@ export class RegisterComponent {
         this.isLoading = false;
       },
       error: (err) => {
-        console.log(err);
+        // console.log(err);
         this.isLoading = false;
         this.errMsg = err.error.msg;
       },

@@ -7,18 +7,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 gap-4 mb-lg-0 fw-bold">
+                @if (isLogin == true) {
                 <li class="nav-item">
                     <a class="nav-link" routerLink="home" routerLinkActive="border-bottom border-2 border-dark">Home</a>
                 </li>
+                <li class="nav-item cursor-pointer rounded bg-danger">
+                    <a (click)="logOut()" class="nav-link">Logout</a>
+                </li>
+                }@else {
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="login" routerLinkActive="border-bottom border-2 border-dark">Login</a>
+                    <a class="nav-link" routerLink="login"
+                        routerLinkActive="border-bottom border-2 border-dark">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="register" routerLinkActive="border-bottom border-2 border-dark">Register</a>
+                    <a class="nav-link" routerLink="register"
+                        routerLinkActive="border-bottom border-2 border-dark">Register</a>
                 </li>
-                <li class="nav-item cursor-pointer">
-                    <a class="nav-link">Logout</a>
-                </li>
+                }
             </ul>
         </div>
     </div>
