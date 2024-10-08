@@ -8,6 +8,7 @@ import { SuccessLogin } from '../interfaces/success-login';
 import { FailLogin } from '../interfaces/fail-login';
 import { jwtDecode } from 'jwt-decode';
 import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +19,13 @@ export class AuthService {
 
   constructor(
     private _HttpClient: HttpClient,
-    @Inject(PLATFORM_ID) id: object
+    @Inject(PLATFORM_ID) id: object,
+    _Router: Router
   ) {
     if (isPlatformBrowser(id)) {
       if (localStorage.getItem('userToken')) {
         this.shareUserData();
+        _Router.navigate([localStorage.getItem('currentPage')]);
       }
     }
   }

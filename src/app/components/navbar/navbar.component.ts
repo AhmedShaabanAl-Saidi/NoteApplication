@@ -16,17 +16,14 @@ export class NavbarComponent implements OnInit {
   constructor(public _AuthService: AuthService, private _Router: Router) {}
 
   ngOnInit(): void {
-    console.log(this._AuthService.userDataDecoded.getValue());
     this._AuthService.userDataDecoded.subscribe(() => {
       if (this._AuthService.userDataDecoded.getValue() != null) {
         this.isLogin = true;
-        console.log("true");
       } else {
         this.isLogin = false;
-        console.log("false");
       }
     });
-  }  
+  }
 
   logOut(): void {
     localStorage.removeItem('userToken');
