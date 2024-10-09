@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NotesService } from '../../shared/services/notes.service';
-import { Note, NotesData } from '../../shared/interfaces/notes-data';
+import { Note } from '../../shared/interfaces/notes-data';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   isLoading: boolean = false;
   errMsg: string = '';
   noteList: Note[] = [];
+  noteId!: string;
 
   constructor(private _NotesService: NotesService) {}
 
@@ -32,6 +33,11 @@ export class HomeComponent implements OnInit {
   }
 
   addNoteForm: FormGroup = new FormGroup({
+    title: new FormControl(null, [Validators.required]),
+    content: new FormControl(null, [Validators.required]),
+  });
+
+  updateNoteForm: FormGroup = new FormGroup({
     title: new FormControl(null, [Validators.required]),
     content: new FormControl(null, [Validators.required]),
   });
@@ -57,14 +63,39 @@ export class HomeComponent implements OnInit {
     this.isLoading = true;
     this._NotesService.getNotes().subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.isLoading = false;
-        this.noteList = res.notes;
+        if ('notes' in res) {
+          this.noteList = res.notes;
+        }
       },
       error: (err) => {
         this.isLoading = false;
-        console.log(err);
+        // console.log(err);
       },
     });
+  }
+
+  setUpdateForm(note: Note, id: string): void {
+    this.noteId = id;
+    this.updateNoteForm.patchValue(note);
+  }
+
+  updateNote(): void {
+    this.isLoading = true;
+    this._NotesService
+      .updateUserNotes(this.noteId, this.updateNoteForm.value)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.isLoading = false;
+          this.getNotes();
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.errMsg = err.error.msg;
+          console.log(err);
+        },
+      });
   }
 }
