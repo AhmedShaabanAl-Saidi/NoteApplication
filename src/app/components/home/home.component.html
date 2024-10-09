@@ -83,7 +83,9 @@
                                 <button class="card-link btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#updateModel" data-bs-whatever="@mdo"
                                     (click)="setUpdateForm(note , note._id)">Update</button>
-                                <button class="card-link btn btn-danger" (click)="deleteNote(note._id)">Delete</button>
+                                <!-- <button class="card-link btn btn-danger" (click)="deleteNote(note._id)">Delete</button> -->
+
+                                <button class="card-link btn btn-danger" (click)="confirmBox(note._id)">Delete</button>
                             </div>
                         </div>
                     </div>
