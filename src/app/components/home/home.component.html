@@ -65,10 +65,15 @@
         <div class="justify-content-center jimu-primary-loading"></div>
     </div>
     }@else {
+
+    @if (noteList.length !=0) {
     <div class="display-notes my-3">
         <div class="container">
+            <input [(ngModel)]="searchTerm" type="search" class="form-control w-50 me-auto shadow mb-2"
+                placeholder="Search by title......">
+
             <div class="row">
-                @for (note of noteList; track $index) {
+                @for (note of noteList | search:searchTerm; track $index) {
                 <div class="col-md-3">
                     <div class="card my-2 bg-body-tertiary shadow">
                         <div class="card-body">
@@ -76,8 +81,9 @@
                             <p class="card-text">{{note.content}}</p>
                             <div class="btn-display d-flex align-items-center justify-content-between">
                                 <button class="card-link btn btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#updateModel" data-bs-whatever="@mdo" (click)="setUpdateForm(note , note._id)">Update</button>
-                                <button class="card-link btn btn-danger">Delete</button>
+                                    data-bs-target="#updateModel" data-bs-whatever="@mdo"
+                                    (click)="setUpdateForm(note , note._id)">Update</button>
+                                <button class="card-link btn btn-danger" (click)="deleteNote(note._id)">Delete</button>
                             </div>
                         </div>
                     </div>
@@ -86,6 +92,11 @@
             </div>
         </div>
     </div>
+    }@else {
+        <div class="empty-cart flex flex-col items-center justify-center text-center mt-5">
+            <h2 class="display-5 fw-medium">There Is No Notes Yet <i class="fa-regular fa-face-smile"></i></h2>
+        </div>
+    }
     }
 
     <!-- update model -->
@@ -132,7 +143,8 @@
                         }
 
                         <div class="modal-footer">
-                            <button type="submit" [disabled]="updateNoteForm.invalid || isLoading" class="btn btn-warning">
+                            <button type="submit" [disabled]="updateNoteForm.invalid || isLoading"
+                                class="btn btn-warning">
                                 Update
                                 @if (isLoading) {
                                 <i class="fas fa-spinner fa-spin"></i>
